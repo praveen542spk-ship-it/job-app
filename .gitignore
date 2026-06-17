@@ -1,0 +1,16 @@
+# Nested folder exclusions
+talenthub/node_modules/
+talenthub-backend/node_modules/
+talenthub/dist/
+talenthub-backend/uploads/
+talenthub-backend/*.log
+
+# Environment files
+talenthub/.env
+talenthub-backend/.env
+talenthub/.env.local
+talenthub-backend/.env.local
+
+# OS files
+.DS_Store
+Thumbs.db
