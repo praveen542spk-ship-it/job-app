@@ -67,8 +67,6 @@ app.get('/api/health', async (req, res) => {
 });
 
 // ── API Routes ────────────────────────────────
-
-
 app.use('/api/auth',         require('./routes/auth'));
 app.use('/api/jobs',         require('./routes/jobs'));
 app.use('/api/applications', require('./routes/applications'));

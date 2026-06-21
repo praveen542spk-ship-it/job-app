@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { api } from "./api";
 import { createClient } from "@supabase/supabase-js";
 
-// Supabase client (Realtime மட்டும்)
+// Supabase client (Realtime only)
 const supabase = createClient(
   import.meta.env.VITE_SUPABASE_URL,
   import.meta.env.VITE_SUPABASE_ANON_KEY
@@ -4330,7 +4330,7 @@ export default function App() {
     return () => supabase.removeChannel(channel);
   }, [fetchJobs]);
 
-  // ── Supabase Realtime — Applications (candidate மட்டும்) ───────────────
+  // ── Supabase Realtime — Applications (candidate only) ───────────────
   useEffect(() => {
     if (!user || user.role !== "candidate") return;
 

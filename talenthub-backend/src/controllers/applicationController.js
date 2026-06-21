@@ -56,7 +56,7 @@ const createApplication = async (req, res, next) => {
 
     await Job.findByIdAndUpdate(jobId, { $inc: { applicantCount: 1 } });
 
-    // ✅ Supabase Realtime — New application broadcast (Employer-க்கு live notify)
+    // ✅ Supabase Realtime — New application broadcast (live notify to Employer)
     await supabase.channel('applications').send({
       type: 'broadcast',
       event: 'application_created',
@@ -191,7 +191,7 @@ const updateApplicationStatus = async (req, res, next) => {
     application.status = status;
     await application.save();
 
-    // ✅ Supabase Realtime — Status change broadcast (Candidate-க்கு live notify)
+    // ✅ Supabase Realtime — Status change broadcast (live notify to Candidate)
     if (oldStatus !== status) {
       await supabase.channel('applications').send({
         type: 'broadcast',
