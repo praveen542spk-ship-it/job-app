@@ -1,6 +1,32 @@
 const dns = require('dns');
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 
+// Monkey-patch dns.lookup to bypass local OS DNS resolver timeouts for MongoDB Atlas hosts
+const originalLookup = dns.lookup;
+dns.lookup = (hostname, options, callback) => {
+  let cb = callback;
+  let opts = options;
+  if (typeof options === 'function') {
+    cb = options;
+    opts = {};
+  }
+  if (hostname && hostname.includes('mongodb.net')) {
+    dns.resolve4(hostname, (err, addresses) => {
+      if (err || !addresses || addresses.length === 0) {
+        return originalLookup(hostname, opts, cb);
+      }
+      if (opts.all) {
+        const results = addresses.map(addr => ({ address: addr, family: 4 }));
+        return cb(null, results);
+      }
+      return cb(null, addresses[0], 4);
+    });
+  } else {
+    return originalLookup(hostname, opts, cb);
+  }
+};
+
+
 require('dotenv').config();
 
 const express   = require('express');
