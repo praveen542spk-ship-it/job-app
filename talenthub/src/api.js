@@ -1,4 +1,4 @@
-const BASE = 'http://127.0.0.1:5000/api';
+const BASE = (import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000/api').replace(/\/+$/, '');
 
 const headers = (withAuth = false) => {
   const h = { 'Content-Type': 'application/json' };
