@@ -8,8 +8,6 @@ const supabase = createClient(
   import.meta.env.VITE_SUPABASE_ANON_KEY
 );
 
-const BACKEND_BASE = (import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000/api').replace(/\/api\/?$/, '');
-
 const STYLES = `
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@500;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700&display=swap');
 
@@ -2403,7 +2401,7 @@ function EmployerDashboard({ user, jobs, onPostJob, onCloseJob, applications, on
                     <td>{a.appliedAt}</td>
                     <td>
                       {a.fileName ? (
-                        <a href={`${BACKEND_BASE}/${a.resumeUrl?.replace(/\\/g, '/')}`} target="_blank" rel="noreferrer" className="resume-download-link" title="Download Resume">
+                        <a href={`${(import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000/api').replace(/\/api\/?$/, '')}/${a.resumeUrl?.replace(/\\/g, '/')}`} target="_blank" rel="noreferrer" className="resume-download-link" title="Download Resume">
                           📎 {a.fileName}
                         </a>
                       ) : "—"}
